@@ -1,0 +1,8 @@
+#+TITLE:   Floatbuf
+#+SINCE:   <replace with next tagged release version>
+#+STARTUP: inlineimages nofold
+
+* Description
+# A summary of what this module does.
+
+Elisp code to make creating child frames easier. Inspired by [[https://github.com/voldikss/vim-floaterm][Vim Floaterm]]
