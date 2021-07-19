@@ -42,7 +42,6 @@
 (defun floatbuf-make-floatbuf ()
   "Make floting buffer with current buffer"
   (interactive)
-  (print floatbuf-top)
   (floatbuf--make-floatbuf-with-dimensions floatbuf-top floatbuf-left floatbuf-width
                                            floatbuf-height (current-buffer)))
 
