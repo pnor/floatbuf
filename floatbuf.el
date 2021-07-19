@@ -22,10 +22,6 @@
 (defvar floatbuf-height 0.6
   "Height of floating buffer.")
 
-;; Opaque
-;; Prolly should be in  private conigs/not package...
-(push '(alpha . 100) floatbuf-frame-params)
-
 (defun floatbuf--make-floatbuf-with-dimensions (top left width height buffer)
   "Make floating buffer displaying BUFFER with WIDTH and HEIGHT at TOP and LEFT."
   (let* ((params (append floatbuf-frame-params
