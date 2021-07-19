@@ -33,9 +33,14 @@
          (frame (window-frame (display-buffer-in-child-frame buffer `((child-frame-parameters . ,params))))))
     (set-frame-parameter parent-frame 'floatbuf-frame frame)))
 
+(defun floatbuf-make-floatbuf-with-buffer (buffer)
+  "Make floting buffer with BUFFER."
+  (floatbuf--make-floatbuf-with-dimensions floatbuf-top floatbuf-left floatbuf-width
+                                           floatbuf-height buffer))
+
 ;;;###autoload
 (defun floatbuf-make-floatbuf ()
-  "Make floting buffer with BUFFER."
+  "Make floting buffer with current buffer"
   (interactive)
   (print floatbuf-top)
   (floatbuf--make-floatbuf-with-dimensions floatbuf-top floatbuf-left floatbuf-width
