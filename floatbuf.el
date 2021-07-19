@@ -1,5 +1,4 @@
 ;;; floatbuf.el --- Floating buffers -*- lexical-binding: t; -*-
-
 ;;; Commentary
 
 ;;; Floating buffers for quick creation of editing in a new context, while still seeing buffers behind.
@@ -22,47 +21,45 @@
 (defvar floatbuf-frame-params default-frame-alist
   "Frame parameters for floating buffer.")
 
-(defvar floatbuf--width 0.5
+(defvar floatbuf-top 0.5
+  "Top location of floating buffer.
+0.0 will make top same as top of parent. 1.0 Will make bottom same as bottom of parent.")
+
+(defvar floatbuf-left 0.5
+  "Left location of floating buffer.
+0.0 will make left same as left of parent. 1.0 Will make right same as right of parent.")
+
+(defvar floatbuf-width 0.5
   "Width of floating buffer.")
 
-(defvar floatbuf--height 0.6
+(defvar floatbuf-height 0.6
   "Height of floating buffer.")
 
-(set-frame-parameter floatbuf nil)
-
-
 ;; Opaque
-;; Prolly should be in  private conigs... transparent terminal is not default
+;; Prolly should be in  private conigs/not package...
 (push '(alpha . 100) floatbuf-frame-params)
 
-;; Frame property
-;; (push '(border-width . 5) floatbuf-frame-params)
-;; Width
-(push '(width . 0.5) floatbuf-frame-params)
-;; Height
-(push '(height . 0.6) floatbuf-frame-params)
+(defun floatbuf--make-floatbuf-with-dimensions (top left width height buffer)
+  "Make floating buffer displaying BUFFER with WIDTH and HEIGHT at TOP and LEFT."
+  (let* ((params (append floatbuf-frame-params
+                         `((top . ,top)
+                           (left . ,left)
+                           (width . ,width)
+                           (height . ,height))))
+         (parent-frame (selected-frame))
+         (frame (window-frame (display-buffer-in-child-frame buffer `((child-frame-parameters . ,params))))))
+    (set-frame-parameter parent-frame 'floatbuf-frame frame)))
 
-;; NOTE: using decimals work super well
-;; Left/Right
-(push '(left . 1.0) floatbuf-frame-params)
-;; Top/Bottom
-(push '(top . 1.0) floatbuf-frame-params)
-
-
-;; Present the floatbuf
-(setq tester (display-buffer-in-child-frame (current-buffer) `((child-frame-parameters . ,floatbuf-frame-params))))
-
-(defun floatbuf--make-floatbuf (width height buffer)
-  "Make floating buffer displaying BUFFER with WIDTH and HEIGHT.
-If WIDTH or HEIGHT is in [0, 1.0], will take up a percentage of the parent frame."
-  ())
-
-(defun floatbuf--make-floatbuf (buffer)
+;;;###autoload
+(defun floatbuf-make-floatbuf ()
   "Make floting buffer with BUFFER."
-  ())
+  (interactive)
+  (print floatbuf-top)
+  (floatbuf--make-floatbuf-with-dimensions floatbuf-top floatbuf-left floatbuf-width
+                                           floatbuf-height (current-buffer)))
 
-(window-valid-p tester)
-
-(window-frame tester)
-
-(delete-frame (window-frame tester))
+;;;###autoload
+(defun floatbuf-delete-floatbuf ()
+  "Delete floatbuf in currently selected frame"
+  (interactive)
+  (delete-frame (frame-parameter (selected-frame) 'floatbuf-frame)))
