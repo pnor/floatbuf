@@ -3,19 +3,6 @@
 
 ;;; Floating buffers for quick creation of editing in a new context, while still seeing buffers behind.
 
-;; TODOs
-;; - TODO make a floating window
-;; - TODO make it opaque (optionally)
-;; - TODO control where it shows up
-;; default configs should be corners, middle, and then custom location..
-;; - define corners or middle, and offset from said location
-;; - TODO which buffer to open by default
-;;    + one for terminal
-;;    + current buffer
-;;    + doom welcome ig... (tho current buffer satisifes this use case)
-
-
-
 ;;; Code:
 
 (defvar floatbuf-frame-params default-frame-alist
