@@ -50,3 +50,7 @@
   "Delete floatbuf in currently selected frame"
   (interactive)
   (delete-frame (frame-parameter (selected-frame) 'floatbuf-frame)))
+
+(provide 'floatbuf)
+
+;;; floatbuf.el ends here
